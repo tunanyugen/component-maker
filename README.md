@@ -1,5 +1,5 @@
 # Requirements
-composer >= v2.1.14 (https://getcomposer.org/download/) 
+composer >= v2.1.14 (https://getcomposer.org/download/)\n
 Nodejs >= v16.13.1 (https://nodejs.org/en/) 
 # Installation
 npm run setup
