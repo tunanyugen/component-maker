@@ -47,7 +47,7 @@ class PrepareProject {
           compiler.context,
           process.env.JS_PATH,
           process.env.TYPE,
-          `${process.env.UUID}.php`
+          `${process.env.UUID}.tsx`
         ),
         tsContent
       );
