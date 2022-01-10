@@ -11,15 +11,47 @@ const rl = readline.createInterface({
 rl.question("Component type: ", (type) => {
     rl.question("Component name: ", (name) => {
         rl.question("Description: ", (description) => {
-            let file = path.resolve(__dirname, ".env");
-            let uuid = "c" + uuidv4().replace("-", "");
+            let uuid = "c" + uuidv4().replace(/-/gmui, "");
+            // edit .env
             try{
+                let file = path.resolve(__dirname, ".env");
                 let env = fs.readFileSync(file, 'utf8');
-                env.replace(/UUID=/, `UUID=${uuid}`);
-                env.replace(/TYPE=/, `TYPE=${type}`);
-                env.replace(/COMPONENT_NAME=/, `COMPONENT_NAME=${name}`);
-                env.replace(/DESCRIPTION=/, `DESCRIPTION=${description}`);
-                fs.writeFileSync(file, env, 'utf8');
+                env = env.replace(/UUID=.*/gui, `UUID=${uuid}`);
+                env = env.replace(/TYPE=.*/gui, `TYPE=${type}`);
+                env = env.replace(/COMPONENT_NAME=.*/gui, `COMPONENT_NAME=${name}`);
+                env = env.replace(/DESCRIPTION=.*/gui, `DESCRIPTION=${description}`);
+                console.log(env);
+                try{
+                    fs.writeFileSync(file, env, 'utf8');
+                } catch(err){
+                    throw err;
+                }
+            } catch (err){
+                throw err;
+            }
+            // edit blade
+            try{
+                let file = path.resolve(__dirname, "src/index.blade.php");
+                let env = fs.readFileSync(file, 'utf8');
+                env = env.replace(/process\.env\.UUID/gui, uuid);
+                try{
+                    fs.writeFileSync(file, env, 'utf8');
+                } catch(err){
+                    throw err;
+                }
+            } catch (err){
+                throw err;
+            }
+            // edit scss
+            try{
+                let file = path.resolve(__dirname, "src/index.scss");
+                let env = fs.readFileSync(file, 'utf8');
+                env = env.replace(/process\.env\.UUID/gui, uuid);
+                try{
+                    fs.writeFileSync(file, env, 'utf8');
+                } catch(err){
+                    throw err;
+                }
             } catch (err){
                 throw err;
             }
