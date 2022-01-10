@@ -16,3 +16,8 @@ API controller: app/Controllers/ApiController.php
 HTML: src/index.blade.php
 Stylings: src/index.scss
 Scripts: src/index.tsx
+
+# RULES
+Only write code between "Write your code here" comments
+Only edit files in "src", "public_html", "app/Controllers" and "routes" directories
+Do not create or delete files
