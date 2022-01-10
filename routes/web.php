@@ -16,7 +16,7 @@ Router::group(['exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::clas
     // API
 
 	Router::group(['prefix' => '/api', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
-        Router::get('/', 'APIController@index')->setName('api.index');
+        Router::get('/', 'ApiController@index')->setName('api.index');
 	});
 
 });
