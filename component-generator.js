@@ -8,15 +8,6 @@ class PrepareProject {
   apply(compiler) {
     // Specify the event hook to attach to
     compiler.hooks.afterEmit.tap("AfterEmitPlugin", (compilation) => {
-      // prepare php
-      let phpContent = fs.readFileSync(path.resolve(compiler.context, "component/component.txt"), "utf8");
-      phpContent = phpContent.replace(/process\.env\.UUID/gmu, process.env.UUID);
-      phpContent = phpContent.replace(/process\.env\.COMPONENT_NAME/gmu, process.env.COMPONENT_NAME);
-      phpContent = phpContent.replace(/process\.env\.DESCRIPTION/gmu, process.env.DESCRIPTION);
-      phpContent = phpContent.replace(/process\.env\.TYPE/gmu, process.env.TYPE);
-      // prepare ts
-      let tsContent = fs.readFileSync(path.resolve(compiler.context, "src/index.tsx"), "utf8");
-      tsContent = tsContent.replace(/import "\.\/index\.scss";/gui, "");
       // create ts folder
       fs.mkdirSync(
         path.resolve(compiler.context, process.env.JS_PATH, process.env.TYPE),
@@ -41,7 +32,7 @@ class PrepareProject {
         ),
         { recursive: true }
       );
-      // copy ts
+      // generate tsx
       fs.writeFileSync(
         path.resolve(
           compiler.context,
@@ -49,7 +40,7 @@ class PrepareProject {
           process.env.TYPE,
           `${process.env.UUID}.tsx`
         ),
-        tsContent
+        this.prepareTSX(compiler)
       );
       // copy scss
       fs.copyFileSync(
@@ -61,16 +52,25 @@ class PrepareProject {
           `${process.env.UUID}.scss`
         )
       );
-      // copy blade
-      fs.copyFileSync(
-          path.resolve(compiler.context, "src/index.blade.php"),
-          path.resolve(
-              compiler.context,
-              process.env.BLADE_PATH,
-              process.env.TYPE,
-              `${process.env.UUID}.blade.php`
-          )
+      // generate blade
+      fs.writeFileSync(
+        path.resolve(
+          compiler.context,
+          process.env.BLADE_PATH,
+          process.env.TYPE,
+          `${process.env.UUID}.blade.php`
+        ),
+        this.prepareBlade(compiler)
       )
+      fs.copyFileSync(
+        path.resolve(compiler.context, "src/index.blade.php"),
+        path.resolve(
+          compiler.context,
+          process.env.BLADE_PATH,
+          process.env.TYPE,
+          `${process.env.UUID}.blade.php`
+        )
+      );
       // generate php
       fs.writeFileSync(
         path.resolve(
@@ -79,10 +79,44 @@ class PrepareProject {
           process.env.TYPE,
           `${process.env.UUID}.php`
         ),
-        phpContent
+        this.preparePHP(compiler)
       );
     });
   }
+  preparePHP = (compiler) => {
+    let phpContent = fs.readFileSync(
+      path.resolve(compiler.context, "component/component.txt"),
+      "utf8"
+    );
+    phpContent = phpContent.replace(/process\.env\.UUID/gmu, process.env.UUID);
+    phpContent = phpContent.replace(
+      /process\.env\.COMPONENT_NAME/gmu,
+      process.env.COMPONENT_NAME
+    );
+    phpContent = phpContent.replace(
+      /process\.env\.DESCRIPTION/gmu,
+      process.env.DESCRIPTION
+    );
+    phpContent = phpContent.replace(/process\.env\.TYPE/gmu, process.env.TYPE);
+    return phpContent;
+  };
+  prepareTSX = (compiler) => {
+    let tsxContent = fs.readFileSync(
+      path.resolve(compiler.context, "src/index.tsx"),
+      "utf8"
+    );
+    tsxContent = tsxContent.replace(/import "\.\/index\.scss";(?:\r\n|\r|\n)/ui, "");
+    return tsxContent;
+  };
+  prepareBlade = (compiler) => {
+    let bladeContent = fs.readFileSync(
+      path.resolve(compiler.context, "src/index.blade.php"),
+      "utf8"
+    )
+    bladeContent = bladeContent.replace(/^<link.*/ui, "");
+    bladeContent = bladeContent.replace(/<script.*$/ui, "");
+    return bladeContent;
+  };
 }
 
 module.exports = PrepareProject;
