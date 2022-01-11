@@ -5,7 +5,7 @@ const path = require("path");
 class UUIDSync{
     lastRan = Date.now();
     apply(compiler){
-        compiler.hooks.afterEmit.tap("AfterEmitPlugin", (compilation) => {
+        compiler.hooks.afterEmit.tap("UUIDSync", (compilation) => {
             // prevent infinite loop
             if (Date.now() - this.lastRan <= 3000){ return }
             this.lastRan = Date.now();
@@ -15,12 +15,17 @@ class UUIDSync{
     
             let blade = fs.readFileSync(bladePath, "utf8");
             let scss = fs.readFileSync(scssPath, "utf8");
-    
-            blade = blade.replace(/<div.*>/ui, `<div class="${process.env.UUID}" id="${process.env.UUID}">`);
-            scss = scss.replace(/\..*/ui, `.${process.env.UUID}{`);
-    
-            fs.writeFileSync(bladePath, blade, "utf8");
-            fs.writeFileSync(scssPath, scss, "utf8");
+
+            let bladeTemplate = `<div class="${process.env.UUID}" id="${process.env.UUID}">`;
+            if (!blade.match(bladeTemplate)){
+                blade = blade.replace(/<div.*>/ui, bladeTemplate);
+                fs.writeFileSync(bladePath, blade, "utf8");
+            }
+            let scssTemplate = `.${process.env.UUID}{`
+            if (!scss.match(scssTemplate)){
+                scss = scss.replace(/\..*/ui, `.${process.env.UUID}{`);
+                fs.writeFileSync(scssPath, scss, "utf8");
+            }
         })
     }
 }

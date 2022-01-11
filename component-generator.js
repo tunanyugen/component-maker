@@ -7,7 +7,7 @@ class PrepareProject {
   // Define `apply` as its prototype method which is supplied with compiler as its argument
   apply(compiler) {
     // Specify the event hook to attach to
-    compiler.hooks.afterEmit.tap("AfterEmitPlugin", (compilation) => {
+    compiler.hooks.afterEmit.tap("PrepareProject", (compilation) => {
       // create ts folder
       fs.mkdirSync(
         path.resolve(compiler.context, process.env.JS_PATH, process.env.TYPE),
@@ -62,15 +62,6 @@ class PrepareProject {
         ),
         this.prepareBlade(compiler)
       )
-      fs.copyFileSync(
-        path.resolve(compiler.context, "src/index.blade.php"),
-        path.resolve(
-          compiler.context,
-          process.env.BLADE_PATH,
-          process.env.TYPE,
-          `${process.env.UUID}.blade.php`
-        )
-      );
       // generate php
       fs.writeFileSync(
         path.resolve(
@@ -113,8 +104,9 @@ class PrepareProject {
       path.resolve(compiler.context, "src/index.blade.php"),
       "utf8"
     )
-    bladeContent = bladeContent.replace(/^<link.*/ui, "");
+    bladeContent = bladeContent.replace(/^<link.*>(?:\r\n|\r|\n)/ui, "");
     bladeContent = bladeContent.replace(/<script.*$/ui, "");
+    console.log(bladeContent);
     return bladeContent;
   };
 }
