@@ -23,7 +23,7 @@ class UUIDSync{
             }
             let scssTemplate = `.${process.env.UUID}{`
             if (!scss.match(scssTemplate)){
-                scss = scss.replace(/\..*/ui, `.${process.env.UUID}{`);
+                scss = scss.replace(/\..*\{/ui, `.${process.env.UUID}{`);
                 fs.writeFileSync(scssPath, scss, "utf8");
             }
         })
