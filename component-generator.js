@@ -106,7 +106,6 @@ class PrepareProject {
     )
     bladeContent = bladeContent.replace(/^<link.*>(?:\r\n|\r|\n)/ui, "");
     bladeContent = bladeContent.replace(/<script.*$/ui, "");
-    console.log(bladeContent);
     return bladeContent;
   };
 }

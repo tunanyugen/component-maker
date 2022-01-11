@@ -10,11 +10,14 @@ class UUIDSync{
             if (Date.now() - this.lastRan <= 3000){ return }
             this.lastRan = Date.now();
             // prevent infinite loop
+
             let bladePath = path.resolve(compiler.context, "src/index.blade.php");
             let scssPath = path.resolve(compiler.context, "src/index.scss");
+            let tsxPath = path.resolve(compiler.context, "src/index.tsx");
     
             let blade = fs.readFileSync(bladePath, "utf8");
             let scss = fs.readFileSync(scssPath, "utf8");
+            let tsx = fs.readFileSync(tsxPath, "utf8");
 
             let bladeTemplate = `<div class="${process.env.UUID}" id="${process.env.UUID}">`;
             if (!blade.match(bladeTemplate)){
@@ -25,6 +28,11 @@ class UUIDSync{
             if (!scss.match(scssTemplate)){
                 scss = scss.replace(/\..*\{/ui, `.${process.env.UUID}{`);
                 fs.writeFileSync(scssPath, scss, "utf8");
+            }
+            let tsxTemplate = `const uuid = "${process.env.UUID}";`;
+            if (!tsx.match(tsxTemplate)){
+                tsx = tsx.replace(/const uuid.*/, tsxTemplate)
+                fs.writeFileSync(tsxPath, tsx, "utf8");
             }
         })
     }

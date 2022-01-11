@@ -7,7 +7,12 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
+// remove dist directory
+let dist = path.resolve(__dirname, "dist");
+if (fs.existsSync(dist)){
+    fs.rm(dist, { recursive: true})
+}
+// asking questions
 rl.question("Component type: ", (type) => {
     rl.question("Component name: ", (name) => {
         rl.question("Description: ", (description) => {
@@ -20,7 +25,6 @@ rl.question("Component type: ", (type) => {
                 env = env.replace(/TYPE=.*/gui, `TYPE=${type}`);
                 env = env.replace(/COMPONENT_NAME=.*/gui, `COMPONENT_NAME=${name}`);
                 env = env.replace(/DESCRIPTION=.*/gui, `DESCRIPTION=${description}`);
-                console.log(env);
                 try{
                     fs.writeFileSync(file, env, 'utf8');
                 } catch(err){
