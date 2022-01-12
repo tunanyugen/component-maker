@@ -30,12 +30,12 @@ class PrepareProject {
     fs.mkdirSync(path.resolve(basePath, componentENV.COMPONENT_NAME),{ recursive: true});
     // generate blade
     fs.writeFileSync(
-      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.UUID}.blade.php`),
+      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.ID}.blade.php`),
       this.prepareBlade(compiler, componentENV)
     )
     // generate php
     fs.writeFileSync(
-      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.UUID}.php`),
+      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.ID}.php`),
       this.preparePHP(compiler, env, componentENV)
     );
   }
@@ -45,21 +45,23 @@ class PrepareProject {
     fs.mkdirSync(basePath,{ recursive: true});
     // generate tsx
     fs.writeFileSync(
-      path.resolve( basePath, `${env.UUID}.tsx`),
+      path.resolve( basePath, `${env.GROUP_ID}.tsx`),
       this.prepareTSX(compiler)
     );
     // copy scss
     fs.copyFileSync(
       path.resolve(compiler.context, "src/index.scss"),
-      path.resolve(basePath, `${env.UUID}.scss`)
+      path.resolve(basePath, `${env.GROUP_ID}.scss`)
     );
   }
   preparePHP = (compiler, env, componentENV) => {
     let phpContent = fs.readFileSync(path.resolve(compiler.context, "component/component.txt"), "utf8");
-    phpContent = phpContent.replace(/process\.env\.UUID/gmu, componentENV.UUID);
+    phpContent = phpContent.replace(/process\.env\.ID/gmu, componentENV.ID);
+    phpContent = phpContent.replace(/process\.env\.GROUP_ID/gmu, env.GROUP_ID);
     phpContent = phpContent.replace(/process\.env\.COMPONENT_NAME/gmu, componentENV.COMPONENT_NAME);
     phpContent = phpContent.replace(/process\.env\.COMPONENT_DESCRIPTION/gmu, componentENV.COMPONENT_DESCRIPTION);
     phpContent = phpContent.replace(/process\.env\.COMPONENT_TYPE/gmu, env.COMPONENT_TYPE);
+    phpContent = phpContent.replace(/process\.env\.COMPONENT_GROUP/gmu, env.COMPONENT_GROUP);
     return phpContent;
   };
   prepareTSX = (compiler) => {

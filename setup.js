@@ -21,7 +21,7 @@ rl.question("Component type: ", (type) => {
         try{
             fs.writeFileSync(
                 path.resolve(__dirname, ".env"),
-`UUID=${uuid}
+`GROUP_ID=${uuid}
 COMPONENT_TYPE=${type}
 COMPONENT_GROUP=${group}
 PATH=dist/final/components`,

@@ -32,7 +32,7 @@ function createENV(name, uuid, description){
         // create env
         fs.writeFileSync(
             env,
-`UUID=${uuid}
+`ID=${uuid}
 COMPONENT_NAME=${name}
 COMPONENT_DESCRIPTION=${description}`,
             "utf8");
@@ -46,7 +46,7 @@ function createBlade(name, uuid){
         // create blade
         fs.writeFileSync(blade,
 `<link rel="stylesheet" href="/main.css">
-<div class="${env.UUID}" id="${uuid}">
+<div class="${env.GROUP_ID}" id="${uuid}">
     <!-- Write your code here -->
     <h1>{{$greetings}}</h1>
     <!-- Write your code here -->
