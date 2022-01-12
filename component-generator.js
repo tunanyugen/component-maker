@@ -10,17 +10,17 @@ class PrepareProject {
     compiler.hooks.afterEmit.tap("PrepareProject", (compilation) => {
       // create ts folder
       fs.mkdirSync(
-        path.resolve(compiler.context, process.env.JS_PATH, process.env.TYPE),
+        path.resolve(compiler.context, process.env.JS_PATH, process.env.COMPONENT_TYPE),
         { recursive: true }
       );
       // create scss folder
       fs.mkdirSync(
-        path.resolve(compiler.context, process.env.CSS_PATH, process.env.TYPE),
+        path.resolve(compiler.context, process.env.CSS_PATH, process.env.COMPONENT_TYPE),
         { recursive: true }
       );
       // create folder storing php
       fs.mkdirSync(
-        path.resolve(compiler.context, process.env.PHP_PATH, process.env.TYPE),
+        path.resolve(compiler.context, process.env.PHP_PATH, process.env.COMPONENT_TYPE),
         { recursive: true }
       );
       // create folder storing blade
@@ -28,7 +28,8 @@ class PrepareProject {
         path.resolve(
           compiler.context,
           process.env.BLADE_PATH,
-          process.env.TYPE
+          process.env.COMPONENT_TYPE,
+          process.env.COMPONENT_NAME
         ),
         { recursive: true }
       );
@@ -37,7 +38,8 @@ class PrepareProject {
         path.resolve(
           compiler.context,
           process.env.JS_PATH,
-          process.env.TYPE,
+          process.env.COMPONENT_TYPE,
+          process.env.COMPONENT_NAME,
           `${process.env.UUID}.tsx`
         ),
         this.prepareTSX(compiler)
@@ -48,7 +50,8 @@ class PrepareProject {
         path.resolve(
           compiler.context,
           process.env.CSS_PATH,
-          process.env.TYPE,
+          process.env.COMPONENT_TYPE,
+          process.env.COMPONENT_NAME,
           `${process.env.UUID}.scss`
         )
       );
@@ -57,7 +60,8 @@ class PrepareProject {
         path.resolve(
           compiler.context,
           process.env.BLADE_PATH,
-          process.env.TYPE,
+          process.env.COMPONENT_TYPE,
+          process.env.COMPONENT_NAME,
           `${process.env.UUID}.blade.php`
         ),
         this.prepareBlade(compiler)
@@ -67,7 +71,8 @@ class PrepareProject {
         path.resolve(
           compiler.context,
           process.env.PHP_PATH,
-          process.env.TYPE,
+          process.env.COMPONENT_TYPE,
+          process.env.COMPONENT_NAME,
           `${process.env.UUID}.php`
         ),
         this.preparePHP(compiler)
@@ -86,9 +91,9 @@ class PrepareProject {
     );
     phpContent = phpContent.replace(
       /process\.env\.DESCRIPTION/gmu,
-      process.env.DESCRIPTION
+      process.env.COMPONENT_DESCRIPTION
     );
-    phpContent = phpContent.replace(/process\.env\.TYPE/gmu, process.env.TYPE);
+    phpContent = phpContent.replace(/process\.env\.TYPE/gmu, process.env.COMPONENT_TYPE);
     return phpContent;
   };
   prepareTSX = (compiler) => {

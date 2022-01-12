@@ -1,15 +1,15 @@
 <?php
 
-namespace Components\process.env.TYPE\process.env.UUID;
+namespace Components\process.env.COMPONENT_TYPE\process.env.UUID;
 
 use App\Utilities\ExtendedComponent;
 
 class process.env.UUID extends ExtendedComponent
 {
     protected string $uuid = "process.env.UUID";
-    protected string $type = "process.env.TYPE";
+    protected string $type = "process.env.COMPONENT_TYPE";
     protected string $name = "process.env.COMPONENT_NAME";
-    protected string $description = "process.env.DESCRIPTION";
+    protected string $description = "process.env.COMPONENT_DESCRIPTION";
     // variables used in pug template
     protected array $variables = [
         
