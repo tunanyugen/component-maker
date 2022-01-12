@@ -9,7 +9,7 @@ class PrepareProject {
     compiler.hooks.afterEmit.tap("PrepareProject", (compilation) => {
       // create group folder
       fs.mkdirSync(
-        path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.COMPONENT_GROUP),
+        path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.GROUP_ID),
         { recursive: true }
       );
       let files = fs.readdirSync(__dirname);
@@ -23,24 +23,24 @@ class PrepareProject {
     });
   }
   generateComponent = (compiler, env, componentENV) => {
-    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.COMPONENT_GROUP);
+    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.GROUP_ID);
     // create base folder
     fs.mkdirSync(basePath,{ recursive: true});
     // create component folder
     fs.mkdirSync(path.resolve(basePath, componentENV.COMPONENT_NAME),{ recursive: true});
     // generate blade
     fs.writeFileSync(
-      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.ID}.blade.php`),
+      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.UUID}.blade.php`),
       this.prepareBlade(compiler, componentENV)
     )
     // generate php
     fs.writeFileSync(
-      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.ID}.php`),
+      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.UUID}.php`),
       this.preparePHP(compiler, env, componentENV)
     );
   }
   generateDependeicies = (compiler, env) => {
-    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.COMPONENT_GROUP);
+    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.GROUP_ID);
     // create base folder
     fs.mkdirSync(basePath,{ recursive: true});
     // generate tsx
@@ -56,12 +56,11 @@ class PrepareProject {
   }
   preparePHP = (compiler, env, componentENV) => {
     let phpContent = fs.readFileSync(path.resolve(compiler.context, "component/component.txt"), "utf8");
-    phpContent = phpContent.replace(/process\.env\.ID/gmu, componentENV.ID);
+    phpContent = phpContent.replace(/process\.env\.UUID/gmu, componentENV.UUID);
     phpContent = phpContent.replace(/process\.env\.GROUP_ID/gmu, env.GROUP_ID);
     phpContent = phpContent.replace(/process\.env\.COMPONENT_NAME/gmu, componentENV.COMPONENT_NAME);
     phpContent = phpContent.replace(/process\.env\.COMPONENT_DESCRIPTION/gmu, componentENV.COMPONENT_DESCRIPTION);
     phpContent = phpContent.replace(/process\.env\.COMPONENT_TYPE/gmu, env.COMPONENT_TYPE);
-    phpContent = phpContent.replace(/process\.env\.COMPONENT_GROUP/gmu, env.COMPONENT_GROUP);
     return phpContent;
   };
   prepareTSX = (compiler) => {

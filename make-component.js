@@ -32,7 +32,7 @@ function createENV(name, uuid, description){
         // create env
         fs.writeFileSync(
             env,
-`ID=${uuid}
+`UUID=${uuid}
 COMPONENT_NAME=${name}
 COMPONENT_DESCRIPTION=${description}`,
             "utf8");

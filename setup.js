@@ -1,39 +1,38 @@
-const readline = require('readline');
+const readline = require("readline");
 const path = require("path");
 const fs = require("fs");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 // remove dist directory
 let dist = path.resolve(__dirname, "dist");
-if (fs.existsSync(dist)){
-    fs.rm(dist, { recursive: true})
+if (fs.existsSync(dist)) {
+  fs.rm(dist, { recursive: true });
 }
 rl.question("Component type: ", (type) => {
-    rl.question("Component group name: ", (group) => {
-        let uuid = "c" + uuidv4().replace(/-/gmui, "");
-        // create src folder
-        fs.mkdirSync(path.resolve(__dirname, "src"), {recursive: true});
-        // generate env
-        try{
-            fs.writeFileSync(
-                path.resolve(__dirname, ".env"),
-`GROUP_ID=${uuid}
+  let uuid = "c" + uuidv4().replace(/-/gimu, "");
+  // create src folder
+  fs.mkdirSync(path.resolve(__dirname, "src"), { recursive: true });
+  // generate env
+  try {
+    fs.writeFileSync(
+      path.resolve(__dirname, ".env"),
+      `GROUP_ID=${uuid}
 COMPONENT_TYPE=${type}
-COMPONENT_GROUP=${group}
 PATH=dist/final/components`,
-                "utf8")
-        }catch (err){
-            throw err;
-        }
-        // generate scss
-        try{
-            fs.writeFileSync(
-                path.resolve(__dirname, "src/index.scss"),
-`.${uuid}{
+      "utf8"
+    );
+  } catch (err) {
+    throw err;
+  }
+  // generate scss
+  try {
+    fs.writeFileSync(
+      path.resolve(__dirname, "src/index.scss"),
+      `.${uuid}{
     // Write your code here
     h1 {
         width: max-content;
@@ -43,27 +42,27 @@ PATH=dist/final/components`,
     }
     // Write your code here
 }`,
-                "utf8")
-        } catch(err){
-            throw err;
-        }
-        // generate tsx
-        try{
-            fs.writeFileSync(
-                path.resolve(__dirname, "src/index.tsx"),
-`import "./index.scss";
+      "utf8"
+    );
+  } catch (err) {
+    throw err;
+  }
+  // generate tsx
+  try {
+    fs.writeFileSync(
+      path.resolve(__dirname, "src/index.tsx"),
+      `import "./index.scss";
 // Write your code here
 console.log("Hello World!");
 // Write your code here`,
-                "utf8"
-            )
-        } catch(err){
-            throw err;
-        }
-        rl.close();
-    })
-})
-rl.on('close', function () {
+      "utf8"
+    );
+  } catch (err) {
+    throw err;
+  }
+  rl.close();
+});
+rl.on("close", function () {
   console.log('\nRun "npm run new-component" to create new components');
   process.exit(0);
 });
