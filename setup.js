@@ -12,8 +12,8 @@ let dist = path.resolve(__dirname, "dist");
 if (fs.existsSync(dist)){
     fs.rm(dist, { recursive: true})
 }
-rl.question("Component group name: ", (group) => {
-    rl.question("Component type: ", (type) => {
+rl.question("Component type: ", (type) => {
+    rl.question("Component group name: ", (group) => {
         let uuid = "c" + uuidv4().replace(/-/gmui, "");
         // create src folder
         fs.mkdirSync(path.resolve(__dirname, "src"), {recursive: true});
@@ -21,10 +21,10 @@ rl.question("Component group name: ", (group) => {
         try{
             fs.writeFileSync(
                 path.resolve(__dirname, ".env"),
-                `UUID=${uuid}
-                COMPONENT_TYPE=${type}
-                COMPONENT_GROUP=${group}
-                PATH=dist/final/components`,
+`UUID=${uuid}
+COMPONENT_TYPE=${type}
+COMPONENT_GROUP=${group}
+PATH=dist/final/components`,
                 "utf8")
         }catch (err){
             throw err;
@@ -33,7 +33,7 @@ rl.question("Component group name: ", (group) => {
         try{
             fs.writeFileSync(
                 path.resolve(__dirname, "src/index.scss"),
-`.c5bdf588c4e30432bbb11f2d68780f94a{
+`.${uuid}{
     // Write your code here
     h1 {
         width: max-content;

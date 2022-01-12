@@ -19,31 +19,39 @@ class PrepareProject {
           this.generateComponent(compiler, env, componentENV);
         }
       })
+      this.generateDependeicies(compiler, env);
     });
   }
   generateComponent = (compiler, env, componentENV) => {
-    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.COMPONENT_GROUP, componentENV.COMPONENT_NAME);
-    // create folder
+    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.COMPONENT_GROUP);
+    // create base folder
+    fs.mkdirSync(basePath,{ recursive: true});
+    // create component folder
+    fs.mkdirSync(path.resolve(basePath, componentENV.COMPONENT_NAME),{ recursive: true});
+    // generate blade
+    fs.writeFileSync(
+      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.UUID}.blade.php`),
+      this.prepareBlade(compiler, componentENV)
+    )
+    // generate php
+    fs.writeFileSync(
+      path.resolve( basePath, componentENV.COMPONENT_NAME, `${componentENV.UUID}.php`),
+      this.preparePHP(compiler, env, componentENV)
+    );
+  }
+  generateDependeicies = (compiler, env) => {
+    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.COMPONENT_GROUP);
+    // create base folder
     fs.mkdirSync(basePath,{ recursive: true});
     // generate tsx
     fs.writeFileSync(
-      path.resolve( basePath, `${componentENV.UUID}.tsx`),
+      path.resolve( basePath, `${env.UUID}.tsx`),
       this.prepareTSX(compiler)
     );
     // copy scss
     fs.copyFileSync(
       path.resolve(compiler.context, "src/index.scss"),
-      path.resolve(basePath, `${componentENV.UUID}.scss`)
-    );
-    // generate blade
-    fs.writeFileSync(
-      path.resolve( basePath, `${componentENV.UUID}.blade.php`),
-      this.prepareBlade(compiler, componentENV)
-    )
-    // generate php
-    fs.writeFileSync(
-      path.resolve( basePath, `${componentENV.UUID}.php`),
-      this.preparePHP(compiler, env, componentENV)
+      path.resolve(basePath, `${env.UUID}.scss`)
     );
   }
   preparePHP = (compiler, env, componentENV) => {
