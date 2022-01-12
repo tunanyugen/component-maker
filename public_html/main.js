@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.scss */ \"./src/index.scss\");\n\nvar uuid = \"c7cdfc83c9e1b4e81af783be653d2da16\";\n// Write your code here\nconsole.log(\"Hello World!\");\n// Write your code here\n\n\n//# sourceURL=webpack://@tunanyugen/component-maker/./src/index.tsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.scss */ \"./src/index.scss\");\n\nvar uuid = \"ce50bafdb801041f4bd0cb7f389e5f9af\";\n// Write your code here\nconsole.log(\"Hello World!\");\n// Write your code here\n\n\n//# sourceURL=webpack://@tunanyugen/component-maker/./src/index.tsx?");
 
 /***/ })
 

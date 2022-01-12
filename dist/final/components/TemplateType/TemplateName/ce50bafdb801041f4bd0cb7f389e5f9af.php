@@ -1,15 +1,15 @@
 <?php
 
-namespace Components\TemplateType\c7cdfc83c9e1b4e81af783be653d2da16;
+namespace Components\process.env.COMPONENT_TYPE\ce50bafdb801041f4bd0cb7f389e5f9af;
 
 use App\Utilities\ExtendedComponent;
 
-class c7cdfc83c9e1b4e81af783be653d2da16 extends ExtendedComponent
+class ce50bafdb801041f4bd0cb7f389e5f9af extends ExtendedComponent
 {
-    protected string $uuid = "c7cdfc83c9e1b4e81af783be653d2da16";
-    protected string $type = "TemplateType";
+    protected string $uuid = "ce50bafdb801041f4bd0cb7f389e5f9af";
+    protected string $type = "process.env.COMPONENT_TYPE";
     protected string $name = "TemplateName";
-    protected string $description = "Description";
+    protected string $description = "process.env.COMPONENT_DESCRIPTION";
     // variables used in pug template
     protected array $variables = [
         
