@@ -63,6 +63,6 @@ console.log("Hello World!");
   rl.close();
 });
 rl.on("close", function () {
-  console.log('\nRun "npm run new-component" to create new components');
+  console.log('\nRun "npm run make-component" to create new components');
   process.exit(0);
 });
