@@ -2,7 +2,7 @@
 
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PrepareProject = require("./component-generator");
+const PrepareProject = require("@tunanyugen/component-maker-scripts/component-generator");
 
 const isProduction = process.env.NODE_ENV == "production";
 
