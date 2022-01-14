@@ -19,7 +19,8 @@ class PrepareProject {
           this.generateComponent(compiler, env, componentENV);
         }
       })
-      this.generateDependeicies(compiler, env);
+      this.generateDependencies(compiler, env);
+      this.copyCompiledDependencies(compiler, env);
     });
   }
   generateComponent = (compiler, env, componentENV) => {
@@ -39,7 +40,7 @@ class PrepareProject {
       this.preparePHP(compiler, env, componentENV)
     );
   }
-  generateDependeicies = (compiler, env) => {
+  generateDependencies = (compiler, env) => {
     let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.GROUP_ID);
     // create base folder
     fs.mkdirSync(basePath,{ recursive: true});
@@ -53,6 +54,21 @@ class PrepareProject {
       path.resolve(compiler.context, "src/index.scss"),
       path.resolve(basePath, `${env.GROUP_ID}.scss`)
     );
+  }
+  copyCompiledDependencies = (compiner, env) => {
+    let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.GROUP_ID);
+    // create base folder
+    fs.mkdirSync(basePath,{ recursive: true});
+    // copy js
+    fs.copyFileSync(
+      path.resolve(compiner.context, "public_html/main.js"),
+      path.resolve( basePath, `${env.GROUP_ID}.js`),
+    )
+    // copy css
+    fs.copyFileSync(
+      path.resolve(compiner.context, "public_html/main.css"),
+      path.resolve( basePath, `${env.GROUP_ID}.css`),
+    )
   }
   preparePHP = (compiler, env, componentENV) => {
     let phpContent = fs.readFileSync(path.resolve(compiler.context, "component/component.txt"), "utf8");
