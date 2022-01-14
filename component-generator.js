@@ -55,18 +55,18 @@ class PrepareProject {
       path.resolve(basePath, `${env.GROUP_ID}.scss`)
     );
   }
-  copyCompiledDependencies = (compiner, env) => {
+  copyCompiledDependencies = (compiler, env) => {
     let basePath = path.resolve(compiler.context, env.PATH, env.COMPONENT_TYPE, env.GROUP_ID);
     // create base folder
     fs.mkdirSync(basePath,{ recursive: true});
     // copy js
     fs.copyFileSync(
-      path.resolve(compiner.context, "public_html/main.js"),
+      path.resolve(compiler.context, "public_html/main.js"),
       path.resolve( basePath, `${env.GROUP_ID}.js`),
     )
     // copy css
     fs.copyFileSync(
-      path.resolve(compiner.context, "public_html/main.css"),
+      path.resolve(compiler.context, "public_html/main.css"),
       path.resolve( basePath, `${env.GROUP_ID}.css`),
     )
   }
