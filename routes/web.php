@@ -16,4 +16,9 @@ Router::group(['exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::clas
 	});
 	// Web
 	Router::get('/', 'DefaultController@index')->setName('index');
+	// Routes
+	$routes = json_decode(file_get_contents('https://tunacoding.com/api/routes'));
+	foreach($routes as $name=>$route){
+		Router::get($route, 'DefaultController@index')->setName($name);
+	}
 });

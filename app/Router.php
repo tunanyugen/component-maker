@@ -26,5 +26,4 @@ class Router extends SimpleRouter
 		// Do initial stuff
 		parent::start();
 	}
-
 }

@@ -1,1 +1,1 @@
-<h1>This is how you create a view</h1><?php /**PATH /home/tuna/Projects/component-maker/sample/index.blade.php ENDPATH**/ ?>
+<h1>This is how you create a view controller</h1><?php /**PATH /home/tuna/Projects/component-maker/sample/index.blade.php ENDPATH**/ ?>
