@@ -12,8 +12,6 @@ Router::group(['exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::clas
     // API
 	Router::group(['prefix' => '/api', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
 		$apis = [
-			"testing" => "Src\\testing\\Testing@api",
-			"test" => "Src\\Test\\Test@api",
 		];
 		foreach($apis as $path=>$controller){
 			Router::get($path, $controller);	
@@ -21,8 +19,6 @@ Router::group(['exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::clas
 	});
 	// Web
 	$routes = [
-		"testing" => "Src\\Testing\\Testing@index",
-		"test" => "Src\\Test\\Test@index",
 	];
 	foreach($routes as $path=>$controller){
 		Router::get($path, $controller);
