@@ -1,6 +1,9 @@
 <?php
 
 // load composer dependencies
+
+use Src\Test\TestController;
+
 require __DIR__.'/../vendor/autoload.php';
 
 function srcPath(string $filename = ""){
