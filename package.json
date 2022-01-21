@@ -25,7 +25,8 @@
     "watch": "webpack --watch",
     "setup": "composer install && npm install && npx setup",
     "make-component": "npx make-component",
-    "dev": "concurrently \"php -S localhost:8000 public_html/index.php\" \"npm run watch\""
+    "dev": "concurrently \"php -S localhost:8000 public_html/index.php\" \"npm run watch\"",
+    "update": "concurrently \"npm update @tunanyugen/component-maker-scripts\""
   },
   "dependencies": {
     "@tunanyugen/component-maker-scripts": "github:tunanyugen/component-maker-scripts",
