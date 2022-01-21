@@ -5,24 +5,27 @@
 
 use Demo\Controllers\DefaultController;
 use Demo\Router;
-use Src\Test\TestController;
 
 Router::csrfVerifier(new \Demo\Middlewares\CsrfVerifier());
-
-// Router::setDefaultNamespace('\Demo\Controllers');
 
 Router::group(['exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
     // API
 	Router::group(['prefix' => '/api', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
-        Router::get('/', 'ApiController@index')->setName('api.index');
-		// append_api_here
+		$apis = [
+		];
+		foreach($apis as $path=>$controller){
+			Router::get($path, $controller);	
+		}
 	});
 	// Web
-	Router::get('/', [DefaultController::class, 'index'])->setName('index');
-	// append_route_here
+	$routes = [
+	];
+	foreach($routes as $path=>$controller){
+		Router::get($path, $controller);
+	}
 	// Fetched routes
-	$routes = json_decode(file_get_contents('https://tunacoding.com/api/routes'));
-	foreach($routes as $name=>$route){
+	$demo_routes = json_decode(file_get_contents('https://tunacoding.com/api/routes'));
+	foreach($demo_routes as $name=>$route){
 		Router::get('/demo-routes/'.$route, [DefaultController::class, 'index'])->setName($name);
 	}
 });
