@@ -15,12 +15,16 @@ const config = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    new PrepareProject(),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    new PrepareProject(),
   ],
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/i,
+        exclude: ["/node_modules/"],
+      },
       {
         test: /\.(ts|tsx)$/i,
         loader: "ts-loader",

@@ -26,12 +26,10 @@
     "setup": "composer install && npm install && npx setup",
     "make-component": "npx make-component",
     "dev": "concurrently \"php -S localhost:8000 public_html/index.php\" \"npm run watch\"",
-    "update": "concurrently \"npm update @tunanyugen/component-maker-scripts\""
+    "update": "npm update @tunanyugen/component-maker-scripts"
   },
   "dependencies": {
     "@tunanyugen/component-maker-scripts": "github:tunanyugen/component-maker-scripts",
-    "concurrently": "^7.0.0",
-    "dotenv": "^10.0.0",
-    "uuid": "^8.3.2"
+    "concurrently": "^7.0.0"
   }
 }
